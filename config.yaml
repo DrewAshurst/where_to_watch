@@ -1,0 +1,19 @@
+api_key: 
+api_host: streaming-availability.p.rapidapi.com
+services:
+  - Netflix
+  - Prime Video
+  - Disney+
+  - Max
+  - Hulu
+  - Apple TV
+  - Peacock
+  - Paramount+
+  - Starz
+  - Mubi
+  - BritBox
+  - Curiosity Stream
+  - Discovery+
+  - Pluto TV
+  - Tubi
+  - Zee5
