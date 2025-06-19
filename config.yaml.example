@@ -1,0 +1,20 @@
+api_key: API_KEY_HERE
+api_host: streaming-availability.p.rapidapi.com
+output_count: 4
+services:
+  - Netflix
+  - Prime Video
+  - Disney+
+  - Max
+  - Hulu
+  - Apple TV
+  - Peacock
+  - Paramount+
+  - Starz
+  - Mubi
+  - BritBox
+  - Curiosity Stream
+  - Discovery+
+  - Pluto TV
+  - Tubi
+  - Zee5
