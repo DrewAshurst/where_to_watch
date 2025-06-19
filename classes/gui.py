@@ -17,53 +17,50 @@ class Gui:
             widget.destroy()
 
     def get_checkbox_values(self, checkboxes):
-        accepted = {
-            'option': [],
-            'service': []
-        }
+        accepted = {"option": [], "service": []}
         for key, val in checkboxes.items():
-            if key.lower() in ['free', 'subscription', 'buy'] and val[1].get():
-                accepted['option'].append(key.lower())
+            if key.lower() in ["free", "subscription", "buy"] and val[1].get():
+                accepted["option"].append(key.lower())
             elif val[1].get():
-                accepted['service'].append(key)
+                accepted["service"].append(key)
 
         return accepted
-
 
     def title_search(self, textbox, type, checkboxes):
         value = textbox.get("1.0", tk.END).strip()
         self.get_checkbox_values(checkboxes)
         accepted = self.get_checkbox_values(checkboxes)
 
-        return_data = self.api.search_content(value, type, accepted, True)
+        return_data = self.api.search_content(value, type, accepted)
         self.show_output(accepted, return_data, type)
 
     def show_output(self, accepted, df, type):
         self.clear_window(self.output_frame)
-        cols = ['show_key', 'genres',  'rating']
+        cols = ["show_key", "genres", "rating"]
 
-        if type == 'series':
-            cols = cols + ['season_count', 'episode_count'] + accepted['option']
+        if type == "series":
+            cols = cols + ["season_count", "episode_count"] + accepted["option"]
         else:
-            cols = cols + ['runtime'] + accepted['option']
+            cols = cols + ["runtime"] + accepted["option"]
         output = df[cols]
         label_container = tk.Frame(self.output_frame, bg="deep sky blue")
-        label_container.pack(anchor='center')
-        
+        label_container.pack(anchor="center")
 
-        for row in output.values.tolist()[:self.output_count]:
-            out_string = ''
+        for row in output.values.tolist()[: self.output_count]:
+            out_string = ""
             for i in range(len(row)):
-                print('col', cols[i])
-                if cols[i] in ['free', 'subscription', 'buy'] and row[i]:
-                    for val in row[i].split('|'):
-                        out_string += f'{val}: {cols[i].capitalize()}\n'
+                print("col", cols[i])
+                if cols[i] in ["free", "subscription", "buy"] and row[i]:
+                    for val in row[i].split("|"):
+                        out_string += f"{val}: {cols[i].capitalize()}\n"
 
-                elif cols[i] == 'show_key':
-                    vals = row[i].split('|')
-                    out_string += f'{vals[0]}: {vals[1]}\n'
+                elif cols[i] == "show_key":
+                    vals = row[i].split("|")
+                    out_string += f"{vals[0]}: {vals[1]}\n"
                 elif row[i]:
-                    out_string += f'{cols[i].replace("_", " ").capitalize()}: {row[i]}\n'
+                    out_string += (
+                        f'{cols[i].replace("_", " ").capitalize()}: {row[i]}\n'
+                    )
 
             tk.Label(
                 label_container,
@@ -74,8 +71,6 @@ class Gui:
                 fg="black",
                 bg="goldenrod",
             ).pack(padx=15, side="left")
-            
-
 
     def all_box_action(self, checkboxes, value):
         for key, box in checkboxes.items():
@@ -126,7 +121,10 @@ class Gui:
 
         for i in range(len(service_list)):
             var = tk.BooleanVar()
-            if i >= col_ind * check_box_column_count and i < (col_ind+1) * check_box_column_count:
+            if (
+                i >= col_ind * check_box_column_count
+                and i < (col_ind + 1) * check_box_column_count
+            ):
                 checkboxes[service_list[i]] = [
                     tk.Checkbutton(
                         cb_cols[col_ind],
@@ -137,9 +135,8 @@ class Gui:
                     ),
                     var,
                 ]
-            if i == ((col_ind+1) * check_box_column_count) - 1:
+            if i == ((col_ind + 1) * check_box_column_count) - 1:
                 col_ind += 1
-
 
         for option in self.api.watch_options:
             var = tk.BooleanVar()

@@ -3,16 +3,14 @@ import pandas as pd
 import json
 
 
-
-
 class Data:
 
     def __init__(self, config):
         self.url = "https://streaming-availability.p.rapidapi.com/shows/search/title"
         self.config = config
-        self.watch_options = ['Free', 'Subscription', 'Buy']
+        self.watch_options = ["Free", "Subscription", "Buy"]
 
-    def search_content(self, title, type, accepted, dump=False):
+    def search_content(self, title, type, accepted):
         output = {}
 
         querystring = {
@@ -29,11 +27,6 @@ class Data:
         }
 
         response = requests.get(self.url, headers=headers, params=querystring)
-
-        if dump:
-
-            with open("output.json", "w") as f:
-                json.dump(response.json(), f, indent=4)
 
         response_data = response.json()
         output = self.collect_data(response_data, type)
